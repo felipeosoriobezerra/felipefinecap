@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block center %}
+  <h2> Lista de reservas</h2>
+
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Nome</th>  
+        <th>CNPj</th>
+        <th>Stand</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservas in reserva %}  
+      <tr>
+        <td>{{ reservas.nome_empresa }}</td> 
+        <td>{{ reservas.cnpj }}</td>
+        <td>{{ reservas.stand }}</td>
+        <td>
+          <a href="{% url 'reserva_editar' id=reservas.id %}" class="btn btn-primary btn-sm">detalhes</a>
+          <a href="{% url 'reserva_remover' id=reservas.id %}" class="btn btn-danger btn-sm">Remover</a>
+        </td>
+      </tr>
+      {% endfor %}
+    
+    </tbody>
+  </table>
+{% endblock %}

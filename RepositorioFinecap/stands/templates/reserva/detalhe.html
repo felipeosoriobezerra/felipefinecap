@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block center %}
+<style>
+   
+   .botao {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff; 
+    text-decoration: none;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+.botao:hover {
+    background-color: #0056b3; 
+    color: #fff; 
+}
+</style>
+
+    <h2> Formulário de Reserva.</h2>
+       
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome da empresa</label>
+            {{ form.nome_empresa }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="nome" class="form-label">Categoria da empresa</label>
+            {{ form.categoria_empresa }}
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">CNPJ</label>
+            {{ form.cnpj }}
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">Stand</label>
+            {{ form.stand }}
+        </div>
+
+
+        <a class="botao" href="{% url 'reserva_listar' %}">VOLTAR</a>
+    </form>    
+{% endblock %}
