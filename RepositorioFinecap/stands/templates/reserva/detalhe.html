@@ -1,51 +1,64 @@
-{% extends 'base.html' %}
-
+{% extends 'base_in.html' %}
 {% block center %}
-<style>
-   
-   .botao {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff; 
-    text-decoration: none;
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    transition: background-color 0.3s, color 0.3s; 
-}
 
-.botao:hover {
-    background-color: #0056b3; 
-    color: #fff; 
-}
-</style>
+<section class="py-5">
+    <div class="container px-5">
+        <div class="bg-light rounded-4 py-5 px-4 px-md-5">
+            <div class="text-center mb-5">                
+                <h1 class="fw-bolder">FINECAP 2023</h1>
+                <p class="lead fw-normal text-muted mb-0">Ficha de detalhes</p>
+            </div>
+  <div class="text-center mb-5"> 
 
-    <h2> Formulário de Reserva.</h2>
-       
-    <form method="post">
-        {% csrf_token %}
+
+
+
+  
+    <br>
+    <br>   
+        <hr>
         <div class="mb-3">
-            <label for="nome" class="form-label">Nome da empresa</label>
-            {{ form.nome_empresa }}
+            <h5>Nome da empresa:</h5>
+            <p>{{ object.nome_empresa }}</p>
         </div>
         
         <div class="mb-3">
-            <label for="nome" class="form-label">Categoria da empresa</label>
-            {{ form.categoria_empresa }}
+            <hr>
+            <h5>Categoria da empresa</h5>
+            <p>{{ object.categoria_empresa }}</p>
         </div>
 
         <div class="mb-3">
-            <label for="nome" class="form-label">CNPJ</label>
-            {{ form.cnpj }}
+            <hr>
+            <h5>CNPJ</h5>
+            <p>{{ object.cnpj }}</p>
         </div>
 
         <div class="mb-3">
-            <label for="nome" class="form-label">Stand</label>
-            {{ form.stand }}
+            <hr>
+            <h5>Stand</h5>
+            <p>{{ object.stand }}</p>
         </div>
 
+        <div class="mb-3">
+            <hr>
+            <h5>Situação</h5>
+            {% if object.quitado %}
+            <p>Quitado</p>
+            {% else %}
+            <p>Aguardando</p>
+            {% endif %}
+        </div>
+        <hr>
 
-        <a class="botao" href="{% url 'reserva_listar' %}">VOLTAR</a>
-    </form>    
+
+        <a class="btn btn-dark btn-lg" href="http://127.0.0.1:8000/visualizar/">VOLTAR</a>
+    
+    </div>
+</div>
+</div>
+
+</section>
 {% endblock %}
+
+

@@ -14,16 +14,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+
+
+
 from django.contrib import admin
 from django.urls import path
 from stands.views import *
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',index,name='index'),
-    path('reserva/',reserva_criar,name='reserva_criar'),
-    path('reserva/editar/<int:id>/',reserva_editar, name='reserva_editar'),
-    path('reserva/remover/<int:id>/',reserva_remover,name='reserva_remover'),
-    path('reserva/listar',reserva_listar,name='reserva_listar'),
 
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path('',index,name='index'),
+    path('reserva/', ReservaCreateView.as_view(), name="reserva_criar"),
+    path('visualizar/', ReservasListView.as_view(), name='lista_reservas'),
+    path('remover_reserva/<int:pk>/', ReservaDeleteView.as_view(), name="remover_reserva"),
+    path('detalhe/<int:pk>/', ReservaDetailView.as_view(), name='reserva_detalhe'),
+    path('update/<int:pk>/', ReservaUpdateView.as_view(), name="editar")
 ]

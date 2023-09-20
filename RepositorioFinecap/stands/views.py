@@ -1,47 +1,49 @@
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import ReservaForm
-
-def reserva_remover(request, id):
-    reserva = get_object_or_404(Reserva, id=id)
-    reserva.delete()
-    return redirect('reserva_listar') 
+from django.views import generic
+from django.urls import reverse_lazy
+from django.contrib import messages
 
 
-def reserva_criar(request):
-    if request.method == 'POST':
-        form = ReservaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            form = ReservaForm()
-        return redirect('reserva_listar') 
-    else:
-        form = ReservaForm()
-    
+class ReservaCreateView(generic.CreateView):
+    model = Reserva
+    form_class = ReservaForm
+    success_url = reverse_lazy("lista_reservas")
+    template_name = "reserva/form.html"
 
-    return render(request, "reserva/form.html", {'form': form})
+    def form_valid(self, form):
+        messages.success(self.request, "Reserva realizada!!!")
+        return super().form_valid(form)
 
-def reserva_editar(request,id):
-    reserva = get_object_or_404(Reserva,id=id)
-   
-    if request.method == 'POST':
-        form = ReservaForm(request.POST,instance=Reserva)
 
-        if form.is_valid():
-            form.save()
-            return redirect('reserva_listar')
-    else:
-        form = ReservaForm(instance=reserva)
 
-    return render(request,'reserva/detalhe.html',{'form':form})
+class ReservasListView(generic.ListView):
+    model = Reserva
+    template_name = "reserva/visualizar.html"
 
-def reserva_listar(request):
-    reserva = Reserva.objects.all()
-    context ={
-        'reserva':reserva
-    }
-    return render(request, "reserva/visualizar.html",context)
+class ReservaDeleteView(generic.DeleteView):
+    model = Reserva
+    success_url = reverse_lazy("lista_reservas")
 
+    def form_valid(self, form):
+        messages.warning(self.request, "Reserva Deletada!!!")
+        return super().form_valid(form)
+
+class ReservaUpdateView(generic.UpdateView):
+    model = Reserva
+    form_class = ReservaForm
+    success_url = reverse_lazy("lista_reservas")
+    template_name = "reserva/form.html"
+
+    def form_valid(self, form):
+        messages.success(self.request, "Alterações cadastradas!")
+        return super().form_valid(form)
+
+
+class ReservaDetailView(generic.DetailView):
+    model = Reserva
+    template_name = "reserva/detalhe.html"  
 
 
 def index(request):
